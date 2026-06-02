@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Richard K. Henderson — Lead Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #2C3E50;
+    --gold: #C0A16B;
+    --gold-light: #E8D9BC;
+    --ink: #1A1A1A;
+    --mid: #5A5A5A;
+    --muted: #888;
+    --warm: #F7F5F0;
+    --warm-mid: #EDE9E2;
+    --sidebar-text: #D4E0EB;
+    --sidebar-muted: #8A9BAB;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    background: var(--warm);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #F7F5F0;
+    letter-spacing: 0.04em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--sidebar-muted);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    padding: 52px 40px 48px;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--gold);
+  }
+  .avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .hero-content { flex: 1; }
+  .hero-name {
+    font-size: 32px;
+    font-weight: 600;
+    color: #F7F5F0;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .hero-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero-bio {
+    font-size: 15px;
+    color: var(--sidebar-text);
+    line-height: 1.75;
+    max-width: 580px;
+    margin-bottom: 20px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 9px 18px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: var(--gold); color: var(--navy); font-weight: 500; }
+  .btn-outline { border: 1px solid rgba(192,161,107,0.5); color: var(--gold); }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 56px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: #243342;
+    padding: 36px 22px;
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  .s-section { margin-bottom: 28px; }
+  .s-head {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(192,161,107,0.25);
+  }
+  .s-item {
+    font-size: 12.5px;
+    color: var(--sidebar-text);
+    line-height: 1.5;
+    margin-bottom: 5px;
+    padding-left: 12px;
+    position: relative;
+  }
+  .s-item::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 16px;
+    line-height: 1.1;
+  }
+  .s-plain { font-size: 12.5px; color: var(--sidebar-text); line-height: 1.5; margin-bottom: 3px; }
+  .s-muted { font-size: 11px; color: var(--sidebar-muted); font-style: italic; margin-bottom: 8px; line-height: 1.4; }
+  .s-bold { font-weight: 600; }
+  .s-link {
+    font-size: 12px;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+    transition: opacity 0.2s;
+  }
+  .s-link:hover { opacity: 0.75; }
+
+  /* ── MAIN ── */
+  .main {
+    padding: 44px 48px;
+    background: var(--warm);
+  }
+
+  .m-section { margin-bottom: 48px; }
+
+  .m-head {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+  }
+
+  /* experience */
+  .exp-item {
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--warm-mid);
+  }
+  .exp-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .exp-co {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .exp-loc { font-size: 13px; color: var(--muted); }
+  .exp-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    font-style: normal;
+  }
+  .exp-role {
+    font-size: 13.5px;
+    font-style: italic;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .exp-intro {
+    font-size: 13.5px;
+    color: var(--mid);
+    font-style: italic;
+    margin-bottom: 10px;
+    line-height: 1.65;
+  }
+  .exp-bullets { list-style: none; padding: 0; }
+  .exp-bullets li {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.7;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 5px;
+  }
+  .exp-bullets li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* projects */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .proj-card {
+    background: #fff;
+    border: 1px solid var(--warm-mid);
+    border-top: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 18px 20px;
+  }
+  .proj-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .proj-text {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.65;
+  }
+  .proj-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    padding: 2px 7px;
+    background: rgba(192,161,107,0.12);
+    color: #7A6030;
+    border-radius: 2px;
+    margin-top: 8px;
+    margin-right: 4px;
+  }
+
+  /* skills */
+  .skill-group { margin-bottom: 14px; }
+  .skill-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    padding: 4px 10px;
+    background: #fff;
+    border: 1px solid var(--warm-mid);
+    border-radius: 3px;
+    color: var(--ink);
+  }
+  .chip.gold {
+    background: rgba(192,161,107,0.10);
+    border-color: rgba(192,161,107,0.35);
+    color: #7A6030;
+  }
+
+  /* education */
+  .edu-item { margin-bottom: 16px; }
+  .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .edu-inst { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .edu-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); }
+  .edu-deg { font-size: 13.5px; font-style: italic; color: var(--navy); margin-bottom: 3px; }
+  .edu-note { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+
+  /* references */
+  .ref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .ref-card {
+    background: #fff;
+    border: 1px solid var(--warm-mid);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .ref-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+  .ref-role { font-size: 12px; color: var(--mid); font-style: italic; margin-bottom: 8px; line-height: 1.4; }
+  .ref-contact { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--gold); line-height: 1.6; }
+
+  /* footer */
+  footer {
+    background: var(--navy);
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    grid-column: 1 / -1;
+  }
+  .footer-name { font-size: 13px; color: var(--sidebar-muted); font-style: italic; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--sidebar-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .page-wrap { grid-template-columns: 1fr; }
+    .sidebar { position: static; height: auto; }
+    .main { padding: 32px 24px; }
+    .proj-grid { grid-template-columns: 1fr; }
+    .ref-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 20px; }
+    .hero { padding: 36px 20px; flex-direction: column; }
+    .nav-links { gap: 16px; }
+  }
+  @media (max-width: 560px) {
+    .hero-name { font-size: 24px; }
+    .nav-links a { font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-name">R. Henderson</div>
+  <div class="nav-links">
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="avatar">RH</div>
+  <div class="hero-content">
+    <div class="hero-name">Richard K. Henderson</div>
+    <div class="hero-title">Lead Data Scientist &nbsp;·&nbsp; Dallas–Fort Worth, TX</div>
+    <div class="hero-bio">Nine years across revenue operations and data science — with front-line pricing and demand forecasting experience in travel and transportation before moving into production ML. At Fairway, built the scoring, recommendation, and AI infrastructure that ~3,000 loan officers use to manage a live pipeline. The combination of having sat in a revenue management seat and being able to build what that seat actually needs is the unusual part.</div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#" onclick="alert('Add your resume PDF link here')">Download Resume</a>
+      <a class="btn btn-outline" href="https://www.linkedin.com/in/richardkhenderson" target="_blank">LinkedIn</a>
+      <a class="btn btn-outline" href="https://github.com/rkhenderson24" target="_blank">GitHub</a>
+      <a class="btn btn-outline" href="mailto:rkhenderson24@gmail.com">Email Me</a>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE WRAP -->
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="s-section">
+      <div class="s-head">Connect</div>
+      <a class="s-link" href="https://www.linkedin.com/in/richardkhenderson" target="_blank">↗ LinkedIn</a>
+      <a class="s-link" href="https://github.com/rkhenderson24" target="_blank">↗ GitHub</a>
+      <a class="s-link" href="mailto:rkhenderson24@gmail.com">↗ rkhenderson24@gmail.com</a>
+      <div class="s-plain" style="margin-top:4px">940.230.1232</div>
+    </div>
+
+    <div class="s-section">
+      <div class="s-head">Technical Stack</div>
+      <div class="s-item">Python, SQL, R</div>
+      <div class="s-item">PySpark, Spark SQL</div>
+      <div class="s-item">Databricks, Snowflake</div>
+      <div class="s-item">AWS, Azure, GCP</div>
+      <div class="s-item">scikit-learn, XGBoost</div>
+      <div class="s-item">LightGBM, statsmodels</div>
+      <div class="s-item">scipy.optimize</div>
+      <div class="s-item">LLMs, RAG, GPT-4</div>
+      <div class="s-item">Power BI, Streamlit</div>
+      <div class="s-item">HTML, JS, CSS</div>
+    </div>
+
+    <div class="s-section">
+      <div class="s-head">Domain Expertise</div>
+      <div class="s-item">Dynamic pricing strategy</div>
+      <div class="s-item">Price elasticity modeling</div>
+      <div class="s-item">Time series forecasting</div>
+      <div class="s-item">Revenue optimization</div>
+      <div class="s-item">Demand &amp; pace analysis</div>
+      <div class="s-item">Constraint-based decisioning</div>
+      <div class="s-item">Recommendation systems</div>
+      <div class="s-item">Propensity &amp; segmentation</div>
+      <div class="s-item">Fraud &amp; anomaly detection</div>
+      <div class="s-item">Operations research</div>
+    </div>
+
+    <div class="s-section">
+      <div class="s-head">Education</div>
+      <div class="s-plain s-bold">DBA, In Progress</div>
+      <div class="s-muted">University of North Texas<br>Expected May 2028</div>
+      <div class="s-plain s-bold">M.S., Data Science</div>
+      <div class="s-muted">University of North Texas<br>December 2024</div>
+      <div class="s-plain s-bold">M.S., Advanced Data Analytics</div>
+      <div class="s-muted">University of North Texas<br>December 2021</div>
+    </div>
+
+    <div class="s-section">
+      <div class="s-head">Military</div>
+      <div class="s-item">Navy &amp; Marine Corps Achievement Medal</div>
+      <div class="s-item">Enlisted Aviation Warfare Specialist</div>
+      <div class="s-item">Navy Battle "E" Ribbon</div>
+    </div>
+
+    <div class="s-section">
+      <div class="s-head">Research Interests</div>
+      <div class="s-item">AI in organizational decision-making</div>
+      <div class="s-item">Human-AI collaboration</div>
+      <div class="s-item">Forecasting &amp; optimization</div>
+      <div class="s-item">Technology adoption</div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- EXPERIENCE -->
+    <section class="m-section" id="experience">
+      <div class="m-head">Experience</div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-co">Fairway Independent Mortgage <span class="exp-loc">— Carrollton, TX</span></span>
+          <span class="exp-date">2024 – Present</span>
+        </div>
+        <div class="exp-role">Team Lead Data Scientist</div>
+        <div class="exp-intro">Built and leads the data science function for a distributed mortgage sales org. Four-person team. Production ML, LLMs, and recommendation systems on Databricks.</div>
+        <ul class="exp-bullets">
+          <li>Pipeline scoring model — gradient boosting on ~200K+ active loan records weekly. Sales teams use it to decide where to spend the day. Estimated 15–20% lift in follow-up contact rates.</li>
+          <li>Mortgage product recommendation engine combining XGBoost ranking with hard eligibility constraints. Cut product-selection time ~30%. Loan officers can see why a product ranked, not just that it did.</li>
+          <li>GPT-4 chatbot for natural language pipeline and compliance Q&amp;A. ~500 business users. Cut analyst manual data-pull requests by ~40%.</li>
+          <li>LLM document generation workflows eliminating ~8–10 hours/week of manual compliance and ops reporting.</li>
+          <li>Databricks ML pipelines for credit risk, fraud detection, refinance propensity, and borrower segmentation — deployed across AWS, Azure, and Snowflake.</li>
+          <li>Converted ~15 recurring Excel reports into Databricks applications. Refresh time from hours to under 10 minutes.</li>
+          <li>Reduced ad hoc analytical requests by ~35% by giving leadership direct access to governed self-service reporting tools.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-co">Apple Leisure Group <span class="exp-loc">— Addison, TX</span></span>
+          <span class="exp-date">Apr 2019 – Dec 2020</span>
+        </div>
+        <div class="exp-role">Revenue Management Analyst</div>
+        <div class="exp-intro">Pricing and inventory decisions for ~50+ travel products. Worked directly in the revenue management function — not supporting it, doing it.</div>
+        <ul class="exp-bullets">
+          <li>Built demand forecasting and booking pace models driving weekly pricing and inventory calls. ~12% accuracy improvement over prior manual methods.</li>
+          <li>Price elasticity analysis across fare tiers and booking windows — output fed directly into promotional planning and commercial strategy.</li>
+          <li>Identified ~$500K+ in untapped ancillary revenue through channel and segment analysis.</li>
+          <li>Built the executive reporting stack leadership used to explain revenue movement. Cut prep time ~5 hours/week.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-co">First Group America <span class="exp-loc">— Dallas, TX</span></span>
+          <span class="exp-date">Oct 2015 – Apr 2019</span>
+        </div>
+        <div class="exp-role">Revenue Analyst</div>
+        <div class="exp-intro">Pricing, forecasting, and demand analysis across a transportation network carrying ~1M+ annual passenger trips.</div>
+        <ul class="exp-bullets">
+          <li>Load factor, booking pace, and fare performance analysis across routes and channels. Informed weekly pricing decisions reviewed by VP-level leadership.</li>
+          <li>Price elasticity and channel segmentation work supporting fare-setting — incremental revenue through more precise pricing adjustments.</li>
+          <li>Built the applied pricing operations foundation that now runs underneath the ML work.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-co">United States Navy</span>
+          <span class="exp-date">2007 – 2011</span>
+        </div>
+        <div class="exp-role">Aviation Electronics — USS Carl Vinson &amp; Bagram, Afghanistan</div>
+        <ul class="exp-bullets">
+          <li>Two operational tours in safety-critical, high-accountability environments. The discipline and execution habits carried over.</li>
+          <li>Navy &amp; Marine Corps Achievement Medal. Enlisted Aviation Warfare Specialist (EAWS).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="m-section" id="projects">
+      <div class="m-head">Selected Work</div>
+      <div class="proj-grid">
+        <div class="proj-card">
+          <div class="proj-title">Pipeline Scoring &amp; Opportunity Prioritization</div>
+          <div class="proj-text">Gradient boosting on ~200K+ weekly loan records. Integrated into CRM workflows via Power BI and Streamlit. Sales teams use the output to prioritize who to call.</div>
+          <span class="proj-tag">XGBoost</span><span class="proj-tag">Databricks</span><span class="proj-tag">Streamlit</span>
+        </div>
+        <div class="proj-card">
+          <div class="proj-title">Mortgage Product Recommendation Engine</div>
+          <div class="proj-text">XGBoost ranking + constraint satisfaction on ~100K+ monthly loan evaluations. Explainable by design — a structured rationale loan officers can act on, not just a score.</div>
+          <span class="proj-tag">Recommendation</span><span class="proj-tag">XGBoost</span><span class="proj-tag">Python</span>
+        </div>
+        <div class="proj-card">
+          <div class="proj-title">Enterprise AI &amp; Self-Service Analytics</div>
+          <div class="proj-text">GPT-4 + RAG chatbot, automated document generation, governed self-service reporting. Shifted ~500 users from analyst-dependent reporting to direct data access.</div>
+          <span class="proj-tag">LLMs</span><span class="proj-tag">RAG</span><span class="proj-tag">GPT-4</span>
+        </div>
+        <div class="proj-card">
+          <div class="proj-title">Revenue Management Forecasting</div>
+          <div class="proj-text">Time series demand and pace models across travel and transportation. Price elasticity analyses feeding real commercial decisions. The applied foundation for the optimization work that followed.</div>
+          <span class="proj-tag">Time Series</span><span class="proj-tag">Forecasting</span><span class="proj-tag">Elasticity</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="m-section" id="skills">
+      <div class="m-head">Skills</div>
+      <div class="skill-group">
+        <div class="skill-label">Core Languages</div>
+        <div class="chips">
+          <span class="chip gold">Python</span>
+          <span class="chip gold">SQL</span>
+          <span class="chip gold">R</span>
+          <span class="chip">PySpark</span>
+          <span class="chip">Spark SQL</span>
+          <span class="chip">HTML</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Machine Learning</div>
+        <div class="chips">
+          <span class="chip gold">XGBoost</span>
+          <span class="chip gold">LightGBM</span>
+          <span class="chip gold">scikit-learn</span>
+          <span class="chip">statsmodels</span>
+          <span class="chip">scipy.optimize</span>
+          <span class="chip">Time Series</span>
+          <span class="chip">Gradient Boosting</span>
+          <span class="chip">Feature Engineering</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">AI &amp; LLMs</div>
+        <div class="chips">
+          <span class="chip gold">GPT-4</span>
+          <span class="chip gold">RAG</span>
+          <span class="chip gold">LLM Applications</span>
+          <span class="chip">Document Q&amp;A</span>
+          <span class="chip">Natural Language Analytics</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Platforms &amp; Infrastructure</div>
+        <div class="chips">
+          <span class="chip gold">Databricks</span>
+          <span class="chip gold">Snowflake</span>
+          <span class="chip">AWS</span>
+          <span class="chip">Azure</span>
+          <span class="chip">GCP</span>
+          <span class="chip">Power BI</span>
+          <span class="chip">Streamlit</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Pricing &amp; Revenue</div>
+        <div class="chips">
+          <span class="chip gold">Dynamic Pricing</span>
+          <span class="chip gold">Price Elasticity Modeling</span>
+          <span class="chip gold">Demand Forecasting</span>
+          <span class="chip">Revenue Management</span>
+          <span class="chip">Booking Pace Analysis</span>
+          <span class="chip">Operations Research</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="m-section" id="education">
+      <div class="m-head">Education</div>
+      <div class="edu-item">
+        <div class="edu-header">
+          <span class="edu-inst">University of North Texas</span>
+          <span class="edu-date">Expected May 2028</span>
+        </div>
+        <div class="edu-deg">Doctor of Business Administration (DBA) — In Progress</div>
+        <div class="edu-note">Research focus: artificial intelligence in organizational decision-making, managerial judgment, technology adoption, and human-AI collaboration in business analytics contexts.</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-header">
+          <span class="edu-inst">University of North Texas</span>
+          <span class="edu-date">December 2024</span>
+        </div>
+        <div class="edu-deg">M.S., Data Science</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-header">
+          <span class="edu-inst">University of North Texas</span>
+          <span class="edu-date">December 2021</span>
+        </div>
+        <div class="edu-deg">M.S., Advanced Data Analytics</div>
+      </div>
+    </section>
+
+    <!-- REFERENCES -->
+    <section class="m-section" id="contact">
+      <div class="m-head">References</div>
+      <div class="ref-grid">
+        <div class="ref-card">
+          <div class="ref-name">Heather King</div>
+          <div class="ref-role">VP of Data &amp; Analytics<br>Fairway Independent Mortgage</div>
+          <div class="ref-contact">heather.king@fairwaymc.com<br>(469) 983-0840</div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-name">Dan Fenton</div>
+          <div class="ref-role">Director of Data &amp; Analytics<br>Equity Prime Mortgage</div>
+          <div class="ref-contact">fent0019@gmail.com<br>(952) 215-2072</div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-name">Dr. Orion P. Welch</div>
+          <div class="ref-role">Co-Founder<br>Inclusivity EQ, LLC</div>
+          <div class="ref-contact">oreilwelch@gmail.com<br>(360) 320-2143</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Richard K. Henderson &nbsp;·&nbsp; richardhenderson.io</div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/richardkhenderson" target="_blank">LinkedIn</a>
+    <a href="https://github.com/rkhenderson24" target="_blank">GitHub</a>
+    <a href="mailto:rkhenderson24@gmail.com">Email</a>
+  </div>
+</footer>
+
+</body>
+</html>
